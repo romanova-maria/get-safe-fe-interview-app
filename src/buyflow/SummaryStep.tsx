@@ -1,4 +1,3 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
 
 interface SummaryStepProps {
@@ -8,7 +7,7 @@ interface SummaryStepProps {
   }
 }
 
-const SummaryStep: React.FC<SummaryStepProps> = (props) => {
+const SummaryStep = (props: SummaryStepProps) => {
   return (
     <>
       <div>Email: {props.collectedData.email}</div>

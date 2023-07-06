@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 interface AgeStepProps {
   cb: (field: string, value: number) => void
 }
 
-const AgeStep: React.FC<AgeStepProps> = (props) => {
+const AgeStep = (props: AgeStepProps) => {
   const [age, setAge] = useState(0)
   return (
     <>
