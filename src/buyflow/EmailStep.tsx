@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 interface EmailStepProps {
   cb: (field: string, value: string) => void
 }
 
-const EmailStep: React.FC<EmailStepProps> = (props) => {
+const EmailStep = (props: EmailStepProps) => {
   const [email, setEmail] = useState('')
   return (
     <>

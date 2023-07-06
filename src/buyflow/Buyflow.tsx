@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import AgeStep from './AgeStep'
 import EmailStep from './EmailStep'
 import SummaryStep from './SummaryStep'
@@ -15,7 +15,7 @@ const PRODUCT_IDS_TO_NAMES = {
   [ProductIds.devIns]: 'Developer Insurance',
 }
 
-const Buyflow: React.FC<BuyflowProps> = (props) => {
+const Buyflow = (props: BuyflowProps) => {
   const [currentStep, setStep] = useState('email')
   const [collectedData, updateData] = useState({
     email: '',
