@@ -33,6 +33,14 @@
 
 .App-link {
   color: #163c2c;
+
+  &:hover {
+    color: #cc822f;
+  }
+}
+
+.insurance-link {
+  display: block;
 }
 
 @keyframes App-logo-spin {

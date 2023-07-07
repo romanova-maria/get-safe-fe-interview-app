@@ -1,40 +1,30 @@
 import { useState } from 'react'
-import AgeStep from './AgeStep'
-import EmailStep from './EmailStep'
-import SummaryStep from './SummaryStep'
+import {Insurance} from '../insurance/insurance';
+import SummaryStep from './steps/SummaryStep';
+import {Step} from '../insurance/step';
 
-interface BuyflowProps {
-  productId: ProductIds
-}
+// todo: investigate possible step data types and improve CollectedData type
+export type CollectedData = Record<string, any>;
 
-export enum ProductIds {
-  devIns = 'dev_ins',
-}
+const Buyflow = ({insurance}: {insurance: Insurance}) => {
+  const [collectedData, updateData] = useState<CollectedData>({});
+  const [step, setStep] = useState<Step | null>(insurance.getSteps());
 
-const PRODUCT_IDS_TO_NAMES = {
-  [ProductIds.devIns]: 'Developer Insurance',
-}
+  const onSubmitData = <T,>(data: T) => {
+    updateData({...collectedData, ...data});
 
-const Buyflow = (props: BuyflowProps) => {
-  const [currentStep, setStep] = useState('email')
-  const [collectedData, updateData] = useState({
-    email: '',
-    age: 0,
-  })
-  const getStepCallback = (nextStep: string) => (field: string, value: any) => {
-    updateData({ ...collectedData, [field]: value })
-    setStep(nextStep)
+    if (!step) { return; }
+    setStep(step.next());
   }
+
+  const StepComponent = () => step ?
+    step.getComponent({onSubmitData: onSubmitData}) :
+    <SummaryStep collectedData={collectedData} insuranceId={insurance.getId()} />;
+
   return (
     <>
-      <h4>Buying {PRODUCT_IDS_TO_NAMES[props.productId]}</h4>
-      {(currentStep === 'email' && <EmailStep cb={getStepCallback('age')} />) ||
-        (currentStep === 'age' && (
-          <AgeStep cb={getStepCallback('summary')} />
-        )) ||
-        (currentStep === 'summary' && (
-          <SummaryStep collectedData={collectedData} />
-        ))}
+      <h4>Buying {insurance.getLabel()}</h4>
+      <StepComponent />
     </>
   )
 }
